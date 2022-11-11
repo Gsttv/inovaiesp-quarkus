@@ -26,9 +26,9 @@ import javax.persistence.Id;
 public class Produto {
 
     private Long id;
-
     private String nome;
     private String descricao;
+
 
     @Id
     @GeneratedValue

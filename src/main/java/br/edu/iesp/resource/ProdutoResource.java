@@ -16,7 +16,10 @@ public class ProdutoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Produto listar() {
-        return new Produto();
+        Produto p = new Produto ();
+        p.setNome("Gustavo");
+        p.setDescricao("Quarkus");
+        return p;
     }
 
     @POST
@@ -25,4 +28,19 @@ public class ProdutoResource {
     public Produto incluir(Produto produto) {
         return produtoService.salvar(produto);
     }
+
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Produto atualizar(Produto produto){
+        return produto;
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deletar(Produto produto){
+    }
+
 }
