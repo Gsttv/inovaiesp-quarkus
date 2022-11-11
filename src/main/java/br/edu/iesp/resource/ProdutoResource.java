@@ -6,41 +6,58 @@ import br.edu.iesp.service.ProdutoService;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/produto")
 public class ProdutoResource {
 
     @Inject
-    private ProdutoService produtoService;
+    ProdutoService produtoService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Produto listar() {
-        Produto p = new Produto ();
-        p.setNome("Gustavo");
-        p.setDescricao("Quarkus");
-        return p;
+    public List<Produto> listar() {
+        return produtoService.listar();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Produto incluir(Produto produto) {
-        return produtoService.salvar(produto);
+    public Response incluir(Produto produto) {
+        return Response.ok(produtoService.salvar(produto)).build();
     }
 
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Produto atualizar(Produto produto){
-        return produto;
+    public Response atualizar(Produto produto) {
+        return Response.ok(produtoService.atualizar(produto)).build();
     }
 
     @DELETE
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void deletar(Produto produto){
+    public Response delete(@PathParam("id") Long id){
+        produtoService.excluir(id);
+        return Response.ok().build();
     }
 
+    @GET
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response consultar(@PathParam("id") Long id){
+        return Response.ok(produtoService.consultar(id)).build();
+    }
+
+    @GET
+    @Path("/nome/{nome}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response consultar(@PathParam("nome") String nome){
+        return Response.ok(produtoService.consultar(nome)).build();
+    }
 }
